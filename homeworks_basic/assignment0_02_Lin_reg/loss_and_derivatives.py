@@ -33,7 +33,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE    
-        return 
+        return np.mean(np.abs(X.dot(w) - Y))
 
     @staticmethod
     def l2_reg(w):
@@ -47,7 +47,7 @@ class LossAndDerivatives:
         """
         
         # YOUR CODE HERE
-        return 
+        return np.sum(w**2)
 
     @staticmethod
     def l1_reg(w):
@@ -61,7 +61,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return np.sum(np.abs(w))
 
     @staticmethod
     def no_reg(w):
@@ -87,7 +87,32 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        grad1 = np.array([])
+        grad2 = np.array([])
+
+        X_huber1 = np.array([])
+        y_huber1 = np.array([])
+
+        X_huber2 = np.array([])
+        y_huber2 = np.array([])
+
+        X_huber1.shape = (0, X.shape[1])
+        X_huber2.shape = (0, X.shape[1])
+
+        for X, y in zip(X, Y):
+
+            if abs(X @ w - y) <= 0.00001:
+                X_huber1 = np.vstack((X_huber1, X))
+                y_huber1 = np.append(y_huber1, y)
+            else:
+                X_huber2 = np.vstack((X_huber2, X))
+                y_huber2 = np.append(y_huber2, y)
+
+        grad1 = np.append(grad1, (X_huber1 @ w - y_huber1) @ X_huber1)
+        grad2 = np.append(grad2, 0.00001 * np.sign(X_huber2 @ w - y_huber2) @ X_huber2)
+
+        grad = grad1 + grad2
+        return grad
 
     @staticmethod
     def mae_derivative(X, Y, w):
