@@ -16,7 +16,7 @@ class LossAndDerivatives:
         Comment: If Y is two-dimentional, average the error over both dimentions.
         """
 
-        return np.mean((X.dot(w) - Y)**2)
+        return np.mean((X.dot(w) - Y) ** 2)
 
     @staticmethod
     def mae(X, Y, w):
@@ -45,9 +45,9 @@ class LossAndDerivatives:
 
         Computes the L2 regularization term for the weight matrix w.
         """
-        
+
         # YOUR CODE HERE
-        return np.sum(w**2)
+        return np.sum(w ** 2)
 
     @staticmethod
     def l1_reg(w):
@@ -69,7 +69,7 @@ class LossAndDerivatives:
         Simply ignores the regularization
         """
         return 0.
-    
+
     @staticmethod
     def mse_derivative(X, Y, w):
         """
@@ -87,8 +87,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-
-        return 2
+        return 2 * X.T @ (X @ w - Y) / Y.shape[0] / (w.shape[1] if w.ndim > 1 else 1)
 
     @staticmethod
     def mae_derivative(X, Y, w):
@@ -107,7 +106,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return X.T.dot(np.abs (X @ w - Y)/(X @ w - Y) / Y.shape[0] / (w.shape[1] if w.ndim > 1 else 1))
 
     @staticmethod
     def l2_reg_derivative(w):
@@ -118,9 +117,8 @@ class LossAndDerivatives:
 
         Computes the L2 regularization term derivative w.r.t. the weight matrix w.
         """
-
         # YOUR CODE HERE
-        return 
+        return 2 * w
 
     @staticmethod
     def l1_reg_derivative(w):
@@ -134,7 +132,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return np.abs(w)/w
 
     @staticmethod
     def no_reg_derivative(w):
