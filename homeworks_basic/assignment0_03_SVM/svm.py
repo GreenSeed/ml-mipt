@@ -44,7 +44,7 @@ class SVM(BaseEstimator, ClassifierMixin):
             kernel function values for all pairs of samples from x_1 and x_2
             torch.tensor shaped `(#samples_1, #samples_2)` of type torch.float32
         '''
-        return x_1 @ x_2.T ### YOUR CODE HERE
+        return torch.Tensor(x_1 @ x_2.T).type(torch.float32) ### YOUR CODE HERE
     
     def __init__(
         self,
@@ -105,7 +105,7 @@ class SVM(BaseEstimator, ClassifierMixin):
             batch = torch.from_numpy(batch).float()
             K = self.kernel_function(batch, self.X)
             # compute the margin values for every object in the batch
-            return (K.dot(self.betas) + self.bias).flatten() ### YOUR CODE HERE
+            return (K@self.betas + self.bias).flatten() ### YOUR CODE HERE
 
     def predict(self, batch):
         scores = self.predict_scores(batch)
